@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Révélation du bébé</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<style>
+* { box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #d6e6ff);
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+.container {
+    background: white;
+    padding: 32px 20px;
+    border-radius: 24px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    width: 92%;
+    max-width: 360px;
+    text-align: center;
+    z-index: 1;
+}
+
+h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    margin-bottom: 24px;
+}
+
+button {
+    width: 100%;
+    font-size: 20px;
+    padding: 16px;
+    border: none;
+    border-radius: 999px;
+    background: #ff8fb1;
+    color: white;
+    cursor: pointer;
+}
+
+#countdown {
+    font-size: 72px;
+    font-weight: bold;
+    margin-top: 20px;
+    display: none;
+}
+
+.result {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 20px;
+    display: none;
+}
+
+.girl { color: #e91e63; }
+.boy { color: #2196f3; }
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container">
+    <h1>Un nouveau chapitre commence…</h1>
+    <p>Prêts à découvrir le secret ?</p>
+    <button id="startBtn" onclick="startCountdown()">Découvrir</button>
+    <div id="countdown">5</div>
+    <div id="result" class="result"></div>
+</div>
+
+<script>
+const babyGender = "girl"; // "girl" ou "boy"
+let timeLeft = 5;
+let interval;
+
+function startCountdown() {
+    document.getElementById("startBtn").style.display = "none";
+    const c = document.getElementById("countdown");
+    c.style.display = "block";
+    c.textContent = timeLeft;
+
+    interval = setInterval(() => {
+        timeLeft--;
+        c.textContent = timeLeft;
+        if (timeLeft === 0) {
+            clearInterval(interval);
+            c.style.display = "none";
+            reveal();
+            startConfetti();
+        }
+    }, 1000);
+}
+
+function reveal() {
+    const r = document.getElementById("result");
+    r.style.display = "block";
+    if (babyGender === "girl") {
+        r.textContent = "🎀 C’EST UNE FILLE 🎀";
+        r.className = "result girl";
+    } else {
+        r.textContent = "🧸 C’EST UN GARÇON 🧸";
+        r.className = "result boy";
+    }
+}
+
+// Confettis
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+let confettis = [];
+
+function resize() {
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+}
+resize();
+addEventListener("resize", resize);
+
+function startConfetti() {
+    confettis = [];
+    const colors = babyGender === "girl"
+        ? ["#ff69b4", "#ffc0cb", "#ffd1dc"]
+        : ["#4fc3f7", "#81d4fa", "#b3e5fc"];
+
+    for (let i = 0; i < 140; i++) {
+        confettis.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * -canvas.height,
+            r: Math.random() * 6 + 4,
+            d: Math.random() * 12 + 6,
+            c: colors[Math.floor(Math.random() * colors.length)],
+            t: Math.random() * 10
+        });
+    }
+    requestAnimationFrame(draw);
+}
+
+function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confettis.forEach(f => {
+        ctx.beginPath();
+        ctx.fillStyle = f.c;
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+        ctx.fill();
+        f.y += f.d * 0.3;
+        f.x += Math.sin(f.t);
+        if (f.y > canvas.height) f.y = -10;
+    });
+    requestAnimationFrame(draw);
+}
+</script>
+
+</body>
+</html>
