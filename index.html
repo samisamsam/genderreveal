@@ -290,7 +290,7 @@
                 tilt: Math.random() * 10
             });
         }
-        requestAnimationFrame(drawConfetti);
+        window.requestAnimationFrame(drawConfetti);
     }
 
     function drawConfetti() {
@@ -304,7 +304,7 @@
             c.x += Math.sin(c.tilt);
             if (c.y > canvas.height) c.y = -10;
         });
-        requestAnimationFrame(drawConfetti);
+        window.requestAnimationFrame(drawConfetti);
     }
 </script>
 
