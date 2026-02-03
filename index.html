@@ -56,28 +56,29 @@ h1 {
     margin-bottom: 10px;
 }
 
-/* Images famille */
 .family-visual {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(6px, 2vw, 12px);
-    margin: 18px 0;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;          /* les images peuvent passer à la ligne */
+    max-width: 100%;
+    box-sizing: border-box;
 }
 
-/* Parents s’adaptent */
+.family-visual img {
+    max-width: 100%;          /* empêche tout débordement */
+    height: auto;
+    object-fit: contain;
+}
+
+/* Rééquilibrage propre */
 .parent {
-    width: clamp(70px, 22vw, 160px);
-    max-width: 30%;
-    border-radius: 12px;
+    width: clamp(80px, 28vw, 160px);
+    max-width: 40%;
 }
 
-/* Echo s’adapte aussi */
 .echo {
-    width: clamp(80px, 28vw, 140px);
-    border-radius: 12px;
+    width: clamp(90px, 32vw, 150px);
+    max-width: 50%;
 }
+
 
 /* Flèches plus petites sur mobile */
 .arrow {
