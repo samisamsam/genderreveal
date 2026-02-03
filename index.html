@@ -204,17 +204,30 @@
 <body>
 
 <canvas id="confetti"></canvas>
-
+      
 <div class="container">
     <h1>Un nouveau chapitre commence…</h1>
-    <p>Prêts à découvrir le secret ?</p>
-    <button id="startBtn" onclick="startCountdown()">Découvrir</button>
+    <div class="family-visual">
+        <img src="img/parents-gauche.jpeg" alt="Parent gauche" class="parent left">
+        <div class="arrow">➡️</div>
+        <img src="img/echographie.jpeg" alt="Échographie" class="echo">
+        <div class="arrow">⬅️</div>
+        <img src="img/parents-droite.jpeg" alt="Parent droit" class="parent right">
+    </div>
+    <p>Le secret va être dévoilé</p>
+    <button id="startBtn" onclick="startCountdown()">Lancer le compte à rebours</button>
     <div id="countdown">5</div>
     <div id="result" class="result"></div>
+    <div id="giftLink" class="gift-link">
+        <div>Si vous voulez jouer le jeu et nous faire un petit geste, la liste de naissance est par ici :</div>
+        <a href="https://lesabymes.bebe9.com/bb9_les_abymes/listes/222917" target="_blank" rel="noopener noreferrer">
+            Accéder à la liste de naissance
+        </a>
+    </div>
 </div>
 
 <script>
-const babyGender = "boy"; // "girl" ou "boy"
+const babyGender = "girl"; // "girl" ou "boy"
 let timeLeft = 5;
 let interval;
 
