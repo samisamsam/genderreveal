@@ -1,78 +1,205 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Révélation du bébé</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<style>
-* { box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <title>Révélation du sexe du bébé</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fleur+De+Leah&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+   <style>
+        body {
+            font-family: 'Open Sans', Arial, sans-serif;
+            background: #ffffff;
+            position: relative;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: linear-gradient(135deg, #ffd6e8, #d6e6ff);
-    margin: 0;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+        body::before {
+            content: "";
+            position: fixed;
+            inset: -50%;
+            z-index: -1;
+            background: conic-gradient(from 0deg, #ffd6e8, #d6e6ff, #ffd6e8);
+            animation: spinBg 20s linear infinite;
+            transform-origin: center;
+        }
+
+        @keyframes spinBg {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pink-mode body::before,
+        body.pink-mode::before {
+            background: radial-gradient(circle at 30% 30%, #ffe3ef, #ffc1da 45%, #ff9fc6 75%, #ff7fb4 100%);
+            animation: none;
+        }
+
+        body.pink-mode .gift-link a {
+            background: linear-gradient(135deg, #ffd1e6, #ff9fc6);
+            color: #6b0f3a;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 80%;
+            width: 90%;
+            z-index: 1;
+        }
+
+        h1 {
+            font-family: 'Fleur De Leah', cursive;
+            font-size: 42px;
+            font-weight: normal;
+            white-space: nowrap;
+        }
+        button {
+            font-size: 18px;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            color: white;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            animation: suspenseButton 2s infinite ease-in-out, textPulse 1s infinite ease-in-out;
+        }
+        #countdown {
+            font-size: 50px;
+            font-weight: bold;
+            margin-top: 30px;
+            display: none;
+        }
+        .result {
+            font-size: 36px;
+            font-weight: bold;
+            margin-top: 25px;
+            display: none;
+        }
+        .gift-link {
+            margin-top: 18px;
+            display: none;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .gift-link a {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 10px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            color: #333;
+            background: linear-gradient(135deg, #ffd6e8, #d6e6ff);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .gift-link a:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+        }
+        .girl { color: #e91e63; }
+        .boy { color: #2196f3; }
+        .family-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+            }
+
+.family-visual img {
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
 }
 
-canvas {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
+.parent {
+    width: 30%;
 }
 
-.container {
-    background: white;
-    padding: 32px 20px;
-    border-radius: 24px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-    width: 92%;
-    max-width: 360px;
-    text-align: center;
-    z-index: 1;
+.echo {
+    width: 110px;
+    /*border: 3px solid #ff8fb1;*/
+    }
+
+        .arrow {
+            font-size: 26px;
+        }
+
+        .family-visual .arrow:first-of-type {
+            animation: arrowInOutRight 1.4s infinite ease-in-out;
+        }
+
+        .family-visual .arrow:last-of-type {
+            animation: arrowInOutLeft 1.4s infinite ease-in-out;
+        }
+@keyframes suspenseButton {
+    0% {
+        background-color: #ffd6e8;
+    }
+    50% {
+        background-color: #d6e6ff;
+    }
+    100% {
+        background-color: #ffd6e8;
+    }
 }
 
-h1 {
-    font-size: 22px;
-    margin-bottom: 10px;
+@keyframes textPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.12);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
+        @keyframes arrowInOutRight {
+            0% {
+                transform: translateX(0);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateX(10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 0.6;
+            }
+        }
 
-p {
-    font-size: 16px;
-    margin-bottom: 24px;
-}
-
-button {
-    width: 100%;
-    font-size: 20px;
-    padding: 16px;
-    border: none;
-    border-radius: 999px;
-    background: #ff8fb1;
-    color: white;
-    cursor: pointer;
-}
-
-#countdown {
-    font-size: 72px;
-    font-weight: bold;
-    margin-top: 20px;
-    display: none;
-}
-
-.result {
-    font-size: 28px;
-    font-weight: bold;
-    margin-top: 20px;
-    display: none;
-}
-
-.girl { color: #e91e63; }
-.boy { color: #2196f3; }
-</style>
+        @keyframes arrowInOutLeft {
+            0% {
+                transform: translateX(0);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateX(-10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 0.6;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -80,91 +207,106 @@ button {
 
 <div class="container">
     <h1>Un nouveau chapitre commence…</h1>
-    <p>Prêts à découvrir le secret ?</p>
-    <button id="startBtn" onclick="startCountdown()">Découvrir</button>
+    <div class="family-visual">
+        <img src="img/parents-gauche.jpeg" alt="Parent gauche" class="parent left">
+        <div class="arrow">➡️</div>
+        <img src="img/echographie.jpeg" alt="Échographie" class="echo">
+        <div class="arrow">⬅️</div>
+        <img src="img/parents-droite.jpeg" alt="Parent droit" class="parent right">
+    </div>
+    <p>Le secret va être dévoilé</p>
+    <button id="startBtn" onclick="startCountdown()">Lancer le compte à rebours</button>
     <div id="countdown">5</div>
     <div id="result" class="result"></div>
+    <div id="giftLink" class="gift-link">
+        <div>Si vous voulez jouer le jeu et nous faire un petit geste, la liste de naissance est par ici :</div>
+        <a href="https://lesabymes.bebe9.com/bb9_les_abymes/listes/222917" target="_blank" rel="noopener noreferrer">
+            Accéder à la liste de naissance
+        </a>
+    </div>
 </div>
 
 <script>
-const babyGender = "boy"; // "girl" ou "boy"
-let timeLeft = 5;
-let interval;
+    const babyGender = "girl"; // changer en "boy" si besoin
+    let timeLeft = 5;
+    let interval;
 
-function startCountdown() {
-    document.getElementById("startBtn").style.display = "none";
-    const c = document.getElementById("countdown");
-    c.style.display = "block";
-    c.textContent = timeLeft;
+    function startCountdown() {
+        document.getElementById("startBtn").style.display = "none";
+        document.getElementById("startBtn").style.animation = "none";
+        const countdown = document.getElementById("countdown");
+        countdown.style.display = "block";
+        countdown.textContent = timeLeft;
 
-    interval = setInterval(() => {
-        timeLeft--;
-        c.textContent = timeLeft;
-        if (timeLeft === 0) {
-            clearInterval(interval);
-            c.style.display = "none";
-            reveal();
-            startConfetti();
+        interval = setInterval(() => {
+            timeLeft--;
+            countdown.textContent = timeLeft;
+            if (timeLeft === 0) {
+                clearInterval(interval);
+                countdown.style.display = "none";
+                reveal();
+                startConfetti();
+            }
+        }, 1000);
+    }
+
+    function reveal() {
+        document.body.classList.add("pink-mode");
+        const result = document.getElementById("result");
+        result.style.display = "block";
+        if (babyGender === "girl") {
+            result.textContent = "🎀 C’EST UNE FILLE 🎀";
+            result.className = "result girl";
+        } else {
+            result.textContent = "🧸 C’EST UN GARÇON 🧸";
+            result.className = "result boy";
         }
-    }, 1000);
-}
-
-function reveal() {
-    const r = document.getElementById("result");
-    r.style.display = "block";
-    if (babyGender === "girl") {
-        r.textContent = "🎀 C’EST UNE FILLE 🎀";
-        r.className = "result girl";
-    } else {
-        r.textContent = "🧸 C’EST UN GARÇON 🧸";
-        r.className = "result boy";
+        document.getElementById("giftLink").style.display = "block";
     }
-}
 
-// Confettis
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
-let confettis = [];
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let confettis = [];
 
-function resize() {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-}
-resize();
-addEventListener("resize", resize);
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
 
-function startConfetti() {
-    confettis = [];
-    const colors = babyGender === "girl"
-        ? ["#ff69b4", "#ffc0cb", "#ffd1dc"]
-        : ["#4fc3f7", "#81d4fa", "#b3e5fc"];
+    function startConfetti() {
+        confettis = [];
+        const colors = babyGender === "girl"
+            ? ["#ff69b4", "#ffc0cb", "#ffd1dc"]
+            : ["#4fc3f7", "#81d4fa", "#b3e5fc"];
 
-    for (let i = 0; i < 140; i++) {
-        confettis.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * -canvas.height,
-            r: Math.random() * 6 + 4,
-            d: Math.random() * 12 + 6,
-            c: colors[Math.floor(Math.random() * colors.length)],
-            t: Math.random() * 10
+        for (let i = 0; i < 150; i++) {
+            confettis.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 6 + 4,
+                d: Math.random() * 20 + 10,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                tilt: Math.random() * 10
+            });
+        }
+        requestAnimationFrame(drawConfetti);
+    }
+
+    function drawConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confettis.forEach(c => {
+            ctx.beginPath();
+            ctx.fillStyle = c.color;
+            ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+            ctx.fill();
+            c.y += c.d * 0.2;
+            c.x += Math.sin(c.tilt);
+            if (c.y > canvas.height) c.y = -10;
         });
+        requestAnimationFrame(drawConfetti);
     }
-    requestAnimationFrame(draw);
-}
-
-function draw() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    confettis.forEach(f => {
-        ctx.beginPath();
-        ctx.fillStyle = f.c;
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
-        ctx.fill();
-        f.y += f.d * 0.3;
-        f.x += Math.sin(f.t);
-        if (f.y > canvas.height) f.y = -10;
-    });
-    requestAnimationFrame(draw);
-}
 </script>
 
 </body>
