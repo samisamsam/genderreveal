@@ -225,86 +225,87 @@
         </a>
     </div>
 </div>
-
 <script>
-const babyGender = "girl"; // "girl" ou "boy"
-let timeLeft = 5;
-let interval;
+    const babyGender = "girl"; // changer en "boy" si besoin
+    let timeLeft = 5;
+    let interval;
 
-function startCountdown() {
-    document.getElementById("startBtn").style.display = "none";
-    const c = document.getElementById("countdown");
-    c.style.display = "block";
-    c.textContent = timeLeft;
+    function startCountdown() {
+        document.getElementById("startBtn").style.display = "none";
+        document.getElementById("startBtn").style.animation = "none";
+        const countdown = document.getElementById("countdown");
+        countdown.style.display = "block";
+        countdown.textContent = timeLeft;
 
-    interval = setInterval(() => {
-        timeLeft--;
-        c.textContent = timeLeft;
-        if (timeLeft === 0) {
-            clearInterval(interval);
-            c.style.display = "none";
-            reveal();
-            startConfetti();
+        interval = setInterval(() => {
+            timeLeft--;
+            countdown.textContent = timeLeft;
+            if (timeLeft === 0) {
+                clearInterval(interval);
+                countdown.style.display = "none";
+                reveal();
+                startConfetti();
+            }
+        }, 1000);
+    }
+
+    function reveal() {
+        document.body.classList.add("pink-mode");
+        const result = document.getElementById("result");
+        result.style.display = "block";
+        if (babyGender === "girl") {
+            result.textContent = "🎀 C’EST UNE FILLE 🎀";
+            result.className = "result girl";
+        } else {
+            result.textContent = "🧸 C’EST UN GARÇON 🧸";
+            result.className = "result boy";
         }
-    }, 1000);
-}
-
-function reveal() {
-    const r = document.getElementById("result");
-    r.style.display = "block";
-    if (babyGender === "girl") {
-        r.textContent = "🎀 C’EST UNE FILLE 🎀";
-        r.className = "result girl";
-    } else {
-        r.textContent = "🧸 C’EST UN GARÇON 🧸";
-        r.className = "result boy";
+        document.getElementById("giftLink").style.display = "block";
     }
-}
 
-// Confettis
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
-let confettis = [];
+    const canvas = document.getElementById("confetti");
+    const ctx = canvas.getContext("2d");
+    let confettis = [];
 
-function resize() {
-    canvas.width = innerWidth;
-    canvas.height = innerHeight;
-}
-resize();
-addEventListener("resize", resize);
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
 
-function startConfetti() {
-    confettis = [];
-    const colors = babyGender === "girl"
-        ? ["#ff69b4", "#ffc0cb", "#ffd1dc"]
-        : ["#4fc3f7", "#81d4fa", "#b3e5fc"];
+    function startConfetti() {
+        confettis = [];
+        const colors = babyGender === "girl"
+            ? ["#ff69b4", "#ffc0cb", "#ffd1dc"]
+            : ["#4fc3f7", "#81d4fa", "#b3e5fc"];
 
-    for (let i = 0; i < 140; i++) {
-        confettis.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * -canvas.height,
-            r: Math.random() * 6 + 4,
-            d: Math.random() * 12 + 6,
-            c: colors[Math.floor(Math.random() * colors.length)],
-            t: Math.random() * 10
+        for (let i = 0; i < 150; i++) {
+            confettis.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: Math.random() * 6 + 4,
+                d: Math.random() * 20 + 10,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                tilt: Math.random() * 10
+            });
+        }
+        requestAnimationFrame(drawConfetti);
+    }
+
+    function drawConfetti() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        confettis.forEach(c => {
+            ctx.beginPath();
+            ctx.fillStyle = c.color;
+            ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
+            ctx.fill();
+            c.y += c.d * 0.2;
+            c.x += Math.sin(c.tilt);
+            if (c.y > canvas.height) c.y = -10;
         });
+        requestAnimationFrame(drawConfetti);
     }
-    requestAnimationFrame(draw);
-}
-
-function draw() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    confettis.forEach(f => {
-        ctx.beginPath();
-        ctx.fillStyle = f.c;
-        ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
-        ctx.fill();
-        f.y += f.d * 0.3;
-        f.x += Math.sin(f.t);
-        if (f.y > canvas.height) f.y = -10;
-    });
-    requestAnimationFrame(draw);
-}
 </script>
 
 </body>
